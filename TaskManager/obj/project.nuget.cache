@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "dgSpecHash": "L/qNQAhtZTgjcpjzHxgk/Zx2UJSQaXYdNqnMd3aMTHC9pBhtho5BbSVnKjPofXSflTsYfPyQSCYpRctRZimRlQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\msi\\RiderProjects\\TaskManager\\TaskManager\\TaskManager.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\msi\\.nuget\\packages\\communitytoolkit.mvvm\\8.2.2\\communitytoolkit.mvvm.8.2.2.nupkg.sha512",
+    "C:\\Users\\msi\\.nuget\\packages\\materialdesigncolors\\3.1.0\\materialdesigncolors.3.1.0.nupkg.sha512",
+    "C:\\Users\\msi\\.nuget\\packages\\materialdesignthemes\\5.1.0\\materialdesignthemes.5.1.0.nupkg.sha512",
+    "C:\\Users\\msi\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\8.0.0\\microsoft.extensions.dependencyinjection.8.0.0.nupkg.sha512",
+    "C:\\Users\\msi\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",
+    "C:\\Users\\msi\\.nuget\\packages\\microsoft.win32.systemevents\\8.0.0\\microsoft.win32.systemevents.8.0.0.nupkg.sha512",
+    "C:\\Users\\msi\\.nuget\\packages\\microsoft.xaml.behaviors.wpf\\1.1.39\\microsoft.xaml.behaviors.wpf.1.1.39.nupkg.sha512",
+    "C:\\Users\\msi\\.nuget\\packages\\system.drawing.common\\8.0.8\\system.drawing.common.8.0.8.nupkg.sha512"
+  ],
+  "logs": []
+}
