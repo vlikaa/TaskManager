@@ -38,3 +38,6 @@ C:\Users\msi\RiderProjects\TaskManager\TaskManager\bin\Debug\net8.0-windows\Micr
 C:\Users\msi\RiderProjects\TaskManager\TaskManager\obj\Debug\net8.0-windows\CustomControls\CustomButton.g.cs
 C:\Users\msi\RiderProjects\TaskManager\TaskManager\obj\Debug\net8.0-windows\CustomControls\CustomButton.baml
 C:\Users\msi\RiderProjects\TaskManager\TaskManager\obj\Debug\net8.0-windows\CustomControls\Scrollbar.baml
+C:\Users\msi\RiderProjects\TaskManager\TaskManager\obj\Debug\net8.0-windows\TaskManager.sourcelink.json
+C:\Users\msi\RiderProjects\TaskManager\TaskManager\bin\Debug\net8.0-windows\System.Management.dll
+C:\Users\msi\RiderProjects\TaskManager\TaskManager\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Management.dll

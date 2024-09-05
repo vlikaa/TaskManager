@@ -39,24 +39,20 @@ public partial class DetailsViewModel : BaseViewModel
 		Application.Current.Dispatcher.Invoke(() =>
 		{
 			Processes.Clear();
+			
 			foreach (var process in processes)
 			{
-				try
+				Processes.Add(new ProcessInfo
 				{
-					var icon = Icon.ExtractAssociatedIcon(process.MainModule?.FileName!);
-					
-					Processes.Add(new ProcessInfo
-					{
-						Icon = IconHelper.ToBitmapSource(icon),
-						Name = process.ProcessName,
-						Id = process.Id,
-						Status = ProcessFunctions.GetProcessStatus(process.Id),
-					});
-				}
-				catch (Win32Exception)
-				{
-					
-				}
+					Icon = IconHelper.GetProcessIcon(process.Id),
+					Name = process.ProcessName,
+					Id = process.Id,
+					Status = ProcessFunctions.GetProcessStatus(process.Id),
+					// UserName = ProcessFunctions.GetProcessUser(process),
+					// Cpu = ProcessFunctions.GetProcessInstanceName(process.Id),
+					Memory = process.WorkingSet64 / 1024,
+					Architecture = ProcessFunctions.GetProcessArchitecture(process.Id)
+				});
 			}
 		});
 	}

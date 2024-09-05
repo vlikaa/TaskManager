@@ -3,16 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:v="clr-namespace:TaskManager.Views"
              xmlns:vm="clr-namespace:TaskManager.ViewModels"
              xmlns:cc="clr-namespace:TaskManager.CustomControls"
-             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:c="clr-namespace:TaskManager.Converters"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="700"
              d:DataContext="{d:DesignInstance Type=vm:DetailsViewModel, IsDesignTimeCreatable=False}">
-        
     <UserControl.Resources>
+        <c:MemoryFormatter x:Key="MemoryFormatter"/>
         <Style TargetType="DataGridColumnHeader">
             <Setter Property="Background" Value="{DynamicResource Secondary}" />
             <Setter Property="Template">
@@ -29,7 +29,7 @@
                                 </Grid.RowDefinitions>
     
                                 <Label Grid.Row="0"
-                                       Margin="0 -10 0 0"
+                                       Margin="-10 -10 0 0"
                                        Foreground="{DynamicResource ArrowColor}"
                                        x:Name="SortIcon"
                                        HorizontalAlignment="Center" />
@@ -63,7 +63,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-    
+        
         <Style TargetType="DataGridCell">
             <Setter Property="Template">
                 <Setter.Value>
@@ -75,6 +75,30 @@
                             <ContentPresenter Margin="2.5 0 2.5 5"
                                               VerticalAlignment="Center" />
                         </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <Style x:Key="ImageCellStyle" TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="DataGridCell">
+                        <Border x:Name="CellBorder"
+                                VerticalAlignment="Center"
+                                BorderBrush="{DynamicResource CellBorderColor}"
+                                BorderThickness="0 0 0.5 0">
+                            <StackPanel Orientation="Horizontal"
+                                        VerticalAlignment="Center">
+                                <Image Source="{Binding Icon}"
+                                       Width="16"
+                                       Height="16"
+                                       Margin="2.5 0 2.5 0" />
+                                <ContentPresenter Margin="0 0 2.5 0"
+                                                  VerticalAlignment="Center" />
+                            </StackPanel>
+                        </Border>
+
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -109,8 +133,8 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition />
         </Grid.RowDefinitions>
-        
-        <Border Grid.Row="0" 
+    
+        <Border Grid.Row="0"
                 Background="{DynamicResource Secondary}"
                 CornerRadius="8 0 0 0">
             <Grid>
@@ -121,27 +145,27 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                
+    
                 <TextBlock Grid.Column="0"
                            FontSize="14"
                            FontWeight="Medium"
                            Margin="15"
                            Foreground="{DynamicResource PrimaryFont}"
                            Text="Details" />
-                
+    
                 <cc:CustomButton Grid.Column="2"
                                  Text="Run new task"
                                  Icon="{md:PackIcon Kind=TaskAdd}" />
-                
+    
                 <Border Grid.Column="3" Width="0.8" Height="33" Background="{DynamicResource Complementary}" CornerRadius="1" VerticalAlignment="Center" />
-                
+    
                 <cc:CustomButton Grid.Column="4"
                                  Text="End task"
                                  Icon="{md:PackIcon Kind=No}" />
             </Grid>
         </Border>
-        
-        <DataGrid Grid.Row="2" 
+    
+        <DataGrid Grid.Row="2"
                   Margin="0 2 0 0"
                   GridLinesVisibility="None"
                   SelectionUnit="FullRow"
@@ -153,43 +177,67 @@
                   Background="{DynamicResource Secondary}"
                   SelectedItem="{Binding SelectedProcess}"
                   ItemsSource="{Binding Processes}">
-            
+    
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Name"
+                <DataGridTextColumn CellStyle="{StaticResource ImageCellStyle}"
+                                    Header="Name"
                                     Width="140"
                                     Binding="{Binding Name}" />
-                                    
+    
                 <DataGridTextColumn Header="PID"
-                                    Width="70"
+                                    Width="50"
                                     Binding="{Binding Id}" />
-                                    
+    
                 <DataGridTextColumn Header="Status"
                                     Width="*"
-                                    IsReadOnly="True" />
-                                    
+                                    Binding="{Binding Status}" />
+    
                 <DataGridTextColumn Header="User name"
                                     Width="*"
-                                    IsReadOnly="True" />
-                                    
+                                    Binding="{Binding UserName}" />
+
+    
                 <DataGridTextColumn Header="CPU"
                                     Width="*"
-                                    IsReadOnly="True" />
-                
+                                    Binding="{Binding Cpu}" />
+    
                 <DataGridTextColumn Header="Memory"
-                                    Width="*"
-                                    IsReadOnly="True" />
-                
+                                    Width="80"
+                                    Binding="{Binding Memory, Converter={StaticResource MemoryFormatter}}">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
+                            <Setter Property="HorizontalAlignment" Value="Right" />
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+
+    
                 <DataGridTextColumn Header="Architecture"
                                     Width="*"
-                                    IsReadOnly="True" />
-                
+                                    Binding="{Binding Architecture}" />
+    
                 <DataGridTextColumn Header="Description"
                                     Width="*"
-                                    IsReadOnly="True" />
-                                    
+                                    Binding="{Binding Description}" />
+    
             </DataGrid.Columns>
             <DataGrid.ContextMenu>
                 <ContextMenu>
+                    <MenuItem Header="End task" />
+                    <Separator Background="Chocolate" />
+                    <MenuItem Header="Change priority" />
+                    <Separator />
+                    <MenuItem Header="Open file location" />
+                    <MenuItem Header="Search" />
+                    <MenuItem Header="Задать приоритет">
+                        <MenuItem Header="Реального времени" IsCheckable="True" />
+                        <MenuItem Header="Высокий" IsCheckable="True" />
+                        <MenuItem Header="Выше среднего" IsCheckable="True" />
+                        <MenuItem Header="Обычный" IsCheckable="True" IsChecked="True" />
+                        <MenuItem Header="Ниже среднего" IsCheckable="True" />
+                        <MenuItem Header="Низкий" IsCheckable="True" />
+                    </MenuItem>
+                    <MenuItem Header="Property" />
                 </ContextMenu>
             </DataGrid.ContextMenu>
         </DataGrid>

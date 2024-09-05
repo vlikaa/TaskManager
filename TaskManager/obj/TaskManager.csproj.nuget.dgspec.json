@@ -50,9 +50,17 @@
               "target": "Package",
               "version": "[8.0.0, )"
             },
+            "System.Diagnostics.Process": {
+              "target": "Package",
+              "version": "[4.3.0, )"
+            },
             "System.Drawing.Common": {
               "target": "Package",
               "version": "[8.0.8, )"
+            },
+            "System.Management": {
+              "target": "Package",
+              "version": "[8.0.0, )"
             }
           },
           "imports": [

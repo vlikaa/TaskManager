@@ -1,5 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using TaskManager.Services;
+﻿using TaskManager.Services;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace TaskManager.ViewModels;
 
@@ -7,5 +7,6 @@ namespace TaskManager.ViewModels;
 public partial class MainViewModel(ViewModelFactory factory) : BaseViewModel
 {
 	
+	[ObservableProperty] private double _buttonWidth = 50; 
 	[ObservableProperty] private BaseViewModel _viewModel = factory.Create(typeof(DetailsViewModel));
 }

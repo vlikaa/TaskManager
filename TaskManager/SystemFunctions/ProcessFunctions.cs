@@ -1,10 +1,15 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Diagnostics;
+using System.Management;
+using System.Runtime.InteropServices;
 using TaskManager.Enums;
 
 namespace TaskManager.SystemFunctions;
 
 public static class ProcessFunctions
 {
+	[DllImport("kernel32.dll")]
+	private static extern bool IsWow64Process(IntPtr processHandle, out bool isWow64);
+	
 	const int ProcessBasicInformation = 0;
 
 	[StructLayout(LayoutKind.Sequential)]
@@ -40,5 +45,70 @@ public static class ProcessFunctions
 
 		return status == 0 ? Status.Suspended : Status.Running; 
 	}
+	
+	public static string GetProcessUser(Process process)
+	{
+		var query = $"SELECT * FROM Win32_Process WHERE ProcessId = {process.Id}";
+		
+		using var searcher = new ManagementObjectSearcher(query);
+		using var processList = searcher.Get();
 
+		var outParameters = new object[2];
+		
+		foreach (var o in processList)
+		{
+			try
+			{
+				var obj = (ManagementObject)o;
+				var result = Convert.ToInt32(obj.InvokeMethod("GetOwner", outParameters));
+				if (result == 0)
+				{
+					return $"{outParameters[1]}\\{outParameters[0]}";
+				}
+			}
+			catch (Exception)
+			{
+				return "N/A";
+			}
+		}
+
+		return "N/A";
+	}
+	
+	public static string GetProcessInstanceName(int processId)
+	{		Console.WriteLine("HI");
+
+		var processCategory = new PerformanceCounterCategory("Process");
+		var instanceNames = processCategory.GetInstanceNames();
+
+		foreach (var instanceName in instanceNames)
+		{
+			using var counter = new PerformanceCounter("Process", "ID Process", instanceName, true);
+			if ((int)counter.RawValue == processId)
+			{
+				return instanceName;
+			}
+		}
+
+		throw new ArgumentException($"Процесс с ID {processId} не найден.");
+	}
+
+	public static Architecture GetProcessArchitecture(int processId)
+	{
+		using var process = Process.GetProcessById(processId);
+		try
+		{
+			if (IsWow64Process(process.Handle, out var isWow64))
+			{
+				return isWow64 ? Architecture.X64 : Architecture.X86;
+			}
+
+			throw new Exception("Unable to determine process architecture.");
+		}
+		catch (Exception ex)
+		{
+			// Handle exceptions as needed
+			return Architecture.X64;
+		}
+	}
 }

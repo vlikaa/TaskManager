@@ -9,19 +9,104 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="MainView" Height="650" Width="900"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
         d:DataContext="{d:DesignInstance Type=vm:MainViewModel, IsDesignTimeCreatable=False}">
     <Window.Resources>
         <DataTemplate DataType="{x:Type vm:DetailsViewModel}">
             <v:DetailsView />
         </DataTemplate>
+        
+        <ControlTemplate TargetType="cc:CustomButton" x:Key="CustomButtonTemplate">
+            <Border CornerRadius="5"
+                    Margin="5"
+                    Background="{TemplateBinding Background}">
+                <Grid VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <Label Grid.Column="0"
+                           FontSize="12"
+                           Padding="6 8 0 0"
+                           Margin="6 0"
+                           Foreground="{TemplateBinding Foreground}"
+                           Content="{TemplateBinding Icon}" />
+                    
+                    <Label Grid.Column="1"
+                           Margin="2 0"
+                           FontSize="15"
+                           Content="{TemplateBinding Content}"
+                           Foreground="{TemplateBinding Foreground}" />
+                    
+                </Grid>
+            </Border>
+        </ControlTemplate>
+        
+        <Style x:Key="NavigationButton" TargetType="cc:CustomButton">
+            <Style.Setters>
+                <Setter Property="Template" Value="{StaticResource CustomButtonTemplate}"/>
+                <Setter Property="Background" Value="{DynamicResource Primary}"/>
+                <Setter Property="Foreground" Value="{DynamicResource PrimaryFont}"/>
+            </Style.Setters>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{DynamicResource NavigationColor}"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="{DynamicResource PressedNavigationColor}" />
+                    <Setter Property="Foreground" Value="{DynamicResource PressedFontColor}" />
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Foreground" Value="{DynamicResource DisableFontColor}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
     
     <Grid Background="{DynamicResource Primary}">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="40"/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
+        <Grid Column="0"
+              Width="Auto">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto"/>
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            
+           
+            
+            <cc:CustomButton Grid.Row="0"
+                             Style="{StaticResource NavigationButton}"
+                             Width="50"
+                             HorizontalAlignment="Left"
+                             Height="50"
+                             Content=""
+                             Click="CustomButton_OnClick"
+                             Icon="{materialDesign:PackIcon Kind=Menu}" />
+            
+            <cc:CustomButton Grid.Row="1"
+                             x:Name="DetailsButton"
+                             Style="{StaticResource NavigationButton}"
+                             Width="50"
+                             Height="50"
+                             Content="Details"
+                             Icon="{materialDesign:PackIcon Kind=FormatListBulleted}" />
+            
+            
+            <cc:CustomButton Grid.Row="3"
+                             x:Name="SettingsButton"
+                             Style="{StaticResource NavigationButton}"
+                             Width="50"
+                             Height="50"
+                             Content="Settings"
+                             Icon="{materialDesign:PackIcon Kind=Settings}" />
+        </Grid>
         
         <ContentPresenter Grid.Column="1" Content="{Binding ViewModel}"/>
         

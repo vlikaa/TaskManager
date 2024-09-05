@@ -1,31 +1,57 @@
-﻿using System.Drawing;
-using System.Drawing.Imaging;
+﻿using System.ComponentModel;
 using System.IO;
+using System.Drawing;
+using System.Diagnostics;
 using System.Windows.Media.Imaging;
 
 namespace TaskManager.Services;
 
-public class IconHelper
+public static class IconHelper
 {
-	public static BitmapSource ToBitmapSource(Icon? icon)
+	public static BitmapSource GetProcessIcon(int processId)
 	{
-		if (icon is null)
+		try
 		{
-			throw new ArgumentException("Icon is null!");
+			var process = Process.GetProcessById(processId);
+			var filePath = process.MainModule?.FileName;
+
+			ArgumentException.ThrowIfNullOrEmpty(filePath);
+
+			var icon = Icon.ExtractAssociatedIcon(filePath);
+
+			if (icon != null)
+			{
+				using var iconStream = new MemoryStream();
+				var bitmap = new BitmapImage();
+
+				icon.Save(iconStream);
+				iconStream.Seek(0, SeekOrigin.Begin);
+
+				bitmap.BeginInit();
+				bitmap.StreamSource = iconStream;
+				bitmap.CacheOption = BitmapCacheOption.OnLoad;
+				bitmap.EndInit();
+
+				return bitmap;
+			}
 		}
+		catch (Win32Exception) { }
 
-		using var memoryStream = new MemoryStream();
-		using var bitmap = icon.ToBitmap();
+		return GetFallbackImage();
+	}
+    
+	private static BitmapSource GetFallbackImage()
+	{
+		var fallbackImagePath = "Images\\default icon.png";
+
+		if (!File.Exists(fallbackImagePath)) return new BitmapImage();
 		
-		bitmap.Save(memoryStream, ImageFormat.Png);
-		memoryStream.Seek(0, SeekOrigin.Begin);
+		var bitmap = new BitmapImage();
+		bitmap.BeginInit();
+		bitmap.UriSource = new Uri(fallbackImagePath, UriKind.RelativeOrAbsolute);
+		bitmap.CacheOption = BitmapCacheOption.OnLoad;
+		bitmap.EndInit();
 
-		var bitmapImage = new BitmapImage();
-		bitmapImage.BeginInit();
-		bitmapImage.StreamSource = memoryStream;
-		bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-		bitmapImage.EndInit();
-
-		return bitmapImage;
+		return bitmap;
 	}
 }
