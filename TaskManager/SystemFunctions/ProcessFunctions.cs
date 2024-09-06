@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.ComponentModel;
+using System.Diagnostics;
 using System.Management;
 using System.Runtime.InteropServices;
 using TaskManager.Enums;
@@ -34,16 +35,23 @@ public static class ProcessFunctions
 
 	public static Status GetProcessStatus(int processId)
 	{
-		IntPtr processHandle = OpenProcess(0x0400 | 0x0010, false, processId);
+		try
+		{
+			IntPtr processHandle = OpenProcess(0x0400 | 0x0010, false, processId);
 		
-		if (processHandle == IntPtr.Zero)
-			return Status.Running;
+			if (processHandle == IntPtr.Zero)
+				return Status.Running;
 
-		int status = NtQueryInformationProcess(processHandle, ProcessBasicInformation, out _, (uint)Marshal.SizeOf(typeof(PROCESS_BASIC_INFORMATION)), IntPtr.Zero);
+			var status = NtQueryInformationProcess(processHandle, ProcessBasicInformation, out _, (uint)Marshal.SizeOf(typeof(PROCESS_BASIC_INFORMATION)), IntPtr.Zero);
 
-		CloseHandle(processHandle);
+			CloseHandle(processHandle);
 
-		return status == 0 ? Status.Suspended : Status.Running; 
+			return status == 0 ? Status.Suspended : Status.Running; 
+		}
+		catch (Win32Exception)
+		{
+			return Status.Suspended;
+		}
 	}
 	
 	public static string GetProcessUser(Process process)
@@ -107,7 +115,6 @@ public static class ProcessFunctions
 		}
 		catch (Exception ex)
 		{
-			// Handle exceptions as needed
 			return Architecture.X64;
 		}
 	}

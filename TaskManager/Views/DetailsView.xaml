@@ -13,6 +13,38 @@
              d:DataContext="{d:DesignInstance Type=vm:DetailsViewModel, IsDesignTimeCreatable=False}">
     <UserControl.Resources>
         <c:MemoryFormatter x:Key="MemoryFormatter"/>
+        
+        <ControlTemplate TargetType="cc:CustomButton" x:Key="CustomButtonTemplate">
+            <Border CornerRadius="2.8" Margin="7" Background="{TemplateBinding Background}">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="4 0 7 0">
+                    <Label FontSize="12"
+                           Foreground="{TemplateBinding Foreground}"
+                           Content="{TemplateBinding Icon}" />
+                    <Label Margin="-4 0 0 0" FontSize="12" Foreground="{TemplateBinding Foreground}" Content="{TemplateBinding Content}" />
+                </StackPanel>
+            </Border>
+        </ControlTemplate>
+        
+        <Style TargetType="cc:CustomButton">
+            <Style.Setters>
+                <Setter Property="Template" Value="{StaticResource CustomButtonTemplate}"/>
+                <Setter Property="Background" Value="{DynamicResource Secondary}"/>
+                <Setter Property="Foreground" Value="{DynamicResource PrimaryFont}"/>
+            </Style.Setters>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{DynamicResource Complementary}"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="{DynamicResource PressedColor}"/>
+                    <Setter Property="Foreground" Value="{DynamicResource PressedFontColor}"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Foreground" Value="{DynamicResource DisableFontColor}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        
         <Style TargetType="DataGridColumnHeader">
             <Setter Property="Background" Value="{DynamicResource Secondary}" />
             <Setter Property="Template">
@@ -154,13 +186,13 @@
                            Text="Details" />
     
                 <cc:CustomButton Grid.Column="2"
-                                 Text="Run new task"
+                                 Content="Run new task"
                                  Icon="{md:PackIcon Kind=TaskAdd}" />
     
                 <Border Grid.Column="3" Width="0.8" Height="33" Background="{DynamicResource Complementary}" CornerRadius="1" VerticalAlignment="Center" />
     
                 <cc:CustomButton Grid.Column="4"
-                                 Text="End task"
+                                 Content="End task"
                                  Icon="{md:PackIcon Kind=No}" />
             </Grid>
         </Border>

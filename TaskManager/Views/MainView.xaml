@@ -43,6 +43,41 @@
             </Border>
         </ControlTemplate>
         
+        <ControlTemplate TargetType="cc:CustomButton" x:Key="ActiveCustomButtonTemplate">
+            <Border CornerRadius="5"
+                    Margin="5"
+                    Background="{TemplateBinding Background}">
+                <Grid VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <Border Grid.Column="0"
+                            Width="3.7"
+                            Margin="0 2.3 0 0"
+                            Height="18"
+                            CornerRadius="3"
+                            Background="#3DECFF" />
+                    
+                    <Label Grid.Column="1"
+                           FontSize="12"
+                           Padding="6 8 0 0"
+                           Margin="2.3 0 6 0"
+                           Foreground="{TemplateBinding Foreground}"
+                           Content="{TemplateBinding Icon}" />
+                    
+                    <Label Grid.Column="2"
+                           Margin="2 0"
+                           FontSize="15"
+                           Content="{TemplateBinding Content}"
+                           Foreground="{TemplateBinding Foreground}" />
+                    
+                </Grid>
+            </Border>
+        </ControlTemplate>
+        
         <Style x:Key="NavigationButton" TargetType="cc:CustomButton">
             <Style.Setters>
                 <Setter Property="Template" Value="{StaticResource CustomButtonTemplate}"/>
@@ -57,8 +92,9 @@
                     <Setter Property="Background" Value="{DynamicResource PressedNavigationColor}" />
                     <Setter Property="Foreground" Value="{DynamicResource PressedFontColor}" />
                 </Trigger>
-                <Trigger Property="IsEnabled" Value="False">
-                    <Setter Property="Foreground" Value="{DynamicResource DisableFontColor}"/>
+                <Trigger Property="IsActive" Value="True">
+                    <Setter Property="Template" Value="{StaticResource ActiveCustomButtonTemplate}"/>
+                    <Setter Property="Background" Value="{DynamicResource NavigationColor}"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -79,32 +115,31 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             
-           
-            
             <cc:CustomButton Grid.Row="0"
                              Style="{StaticResource NavigationButton}"
                              Width="50"
                              HorizontalAlignment="Left"
                              Height="50"
                              Content=""
-                             Click="CustomButton_OnClick"
+                             Command="{Binding MenuButtonCommand}"
                              Icon="{materialDesign:PackIcon Kind=Menu}" />
             
             <cc:CustomButton Grid.Row="1"
-                             x:Name="DetailsButton"
+                             IsActive="{Binding IsDetailsActive}"
                              Style="{StaticResource NavigationButton}"
-                             Width="50"
+                             Width="{Binding ButtonWidth}"
                              Height="50"
                              Content="Details"
+                             Command="{Binding DetailsButtonCommand}"
                              Icon="{materialDesign:PackIcon Kind=FormatListBulleted}" />
             
-            
             <cc:CustomButton Grid.Row="3"
-                             x:Name="SettingsButton"
+                             IsActive="{Binding IsSettingsActive}"
                              Style="{StaticResource NavigationButton}"
-                             Width="50"
+                             Width="{Binding ButtonWidth}"
                              Height="50"
                              Content="Settings"
+                             Command="{Binding SettingsButtonCommand}"
                              Icon="{materialDesign:PackIcon Kind=Settings}" />
         </Grid>
         
