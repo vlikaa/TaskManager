@@ -6,15 +6,79 @@
         xmlns:v="clr-namespace:TaskManager.Views"
         xmlns:vm="clr-namespace:TaskManager.ViewModels"
         xmlns:cc="clr-namespace:TaskManager.CustomControls"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         Title="MainView" Height="650" Width="900"
+        WindowStyle="None"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
         d:DataContext="{d:DesignInstance Type=vm:MainViewModel, IsDesignTimeCreatable=False}">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="0" 
+                      ResizeBorderThickness="5"
+                      CornerRadius="10" />
+    </WindowChrome.WindowChrome>
+    
     <Window.Resources>
         <DataTemplate DataType="{x:Type vm:DetailsViewModel}">
             <v:DetailsView />
         </DataTemplate>
+        
+        <BooleanToVisibilityConverter x:Key="BoolToVisConverter" />
+        
+        <ControlTemplate x:Key="CustomTextBox" TargetType="TextBox">
+            <Border CornerRadius="5"
+                    Margin="147 8 155 8"
+                    Visibility="{Binding IsDetailsActive, Converter={StaticResource BoolToVisConverter}}"
+                    Background="{DynamicResource NavigationColor}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            
+                            <Label Grid.Column="0"
+                                   Margin="8 0"
+                                   VerticalAlignment="Center"
+                                   Foreground="{DynamicResource PressedFontColor}"
+                                   Content="{md:PackIcon Kind=Magnify}"/>
+                            
+                            <TextBox Grid.Column="1"
+                                     BorderThickness="0"
+                                     FontSize="15"
+                                     FontWeight="450"
+                                     Foreground="{DynamicResource PressedFontColor}"
+                                     Background="{TemplateBinding Background}"
+                                     Margin="0 0 0 3"
+                                     VerticalAlignment="Center" />
+                        </Grid>                     
+                        
+                        <Border Grid.Row="1"
+                                Height="2.5"
+                                CornerRadius="0 0 5 5"
+                                Background="#3DECFF" />
+                    </Grid>
+                </Border>
+        </ControlTemplate>
+        
+        <Style x:Key="HeaderTextBox" TargetType="TextBox">
+            <Style.Setters>
+                <Setter Property="Template" Value="{StaticResource CustomTextBox}"/>
+                <Setter Property="Background" Value="{DynamicResource NavigationColor}"/>
+            </Style.Setters>
+            <Style.Triggers>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="Background" Value="Red" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
         
         <ControlTemplate TargetType="cc:CustomButton" x:Key="CustomButtonTemplate">
             <Border CornerRadius="5"
@@ -98,52 +162,195 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        
+        <Style TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" Height="30" VerticalAlignment="Top" Padding="16.5 0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="{DynamicResource NavigationColor}" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="{DynamicResource PressedNavigationColor}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Background" Value="{DynamicResource Primary}" />
+            <Setter Property="Foreground" Value="{DynamicResource PrimaryFont}" />
+        </Style>
     </Window.Resources>
-    
-    <Grid Background="{DynamicResource Primary}">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        
+        <Border Grid.Row="0" Background="{DynamicResource Primary}" Height="48" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="0"
+                        Background="Red"
+                        VerticalAlignment="Top"
+                        Margin="18 18 18 0"
+                        CornerRadius="10"
+                        Width="14"
+                        Height="14" />
+                
+                
+                <!-- <Image Grid.Column="0" -->
+                <!--        Source="/Resources/default icon.png" /> -->
+                
+                <Label Grid.Column="1"
+                       VerticalAlignment="Top"
+                       Margin="5 10 0 0"
+                       FontSize="13.5"
+                       Foreground="{DynamicResource PrimaryFont}"
+                       Content="Task manager" />
+                
+                <TextBox Grid.Column="2"
+                         Style="{StaticResource HeaderTextBox}" />
+                
+                <!-- <Border Grid.Column="2" -->
+                <!--         CornerRadius="5" -->
+                <!--         Margin="147 8 155 8" -->
+                <!--         Visibility="{Binding IsDetailsActive, Converter={StaticResource BoolToVisConverter}}" -->
+                <!--         Background="{DynamicResource NavigationColor}"> -->
+                <!--     <Grid> -->
+                <!--         <Grid.RowDefinitions> -->
+                <!--             <RowDefinition /> -->
+                <!--             <RowDefinition Height="Auto" /> -->
+                <!--         </Grid.RowDefinitions> -->
+                <!--          -->
+                <!--         <Grid Grid.Row="0"> -->
+                <!--             <Grid.ColumnDefinitions> -->
+                <!--                 <ColumnDefinition Width="Auto" /> -->
+                <!--                 <ColumnDefinition /> -->
+                <!--             </Grid.ColumnDefinitions> -->
+                <!--              -->
+                <!--             <Label Grid.Column="0" -->
+                <!--                    Margin="8 0" -->
+                <!--                    VerticalAlignment="Center" -->
+                <!--                    Foreground="{DynamicResource PressedFontColor}" -->
+                <!--                    Content="{md:PackIcon Kind=Magnify}"/> -->
+                <!--              -->
+                <!--             <TextBox Grid.Column="1" -->
+                <!--                      BorderThickness="0" -->
+                <!--                      FontSize="15" -->
+                <!--                      FontWeight="450" -->
+                <!--                      Foreground="{DynamicResource PressedFontColor}" -->
+                <!--                      Background="{DynamicResource NavigationColor}" -->
+                <!--                      Margin="0 0 0 3" -->
+                <!--                      VerticalAlignment="Center" /> -->
+                <!--              -->
+                <!--         </Grid>                      -->
+                <!--          -->
+                <!--         <Border Grid.Row="1" -->
+                <!--                 Height="2.5" -->
+                <!--                 CornerRadius="0 0 5 5" -->
+                <!--                 Background="#3DECFF" /> -->
+                <!--     </Grid> -->
+                <!-- </Border> -->
+                
+                <Button Grid.Column="3"
+                        Content="{md:PackIcon Kind=HorizontalLine}" />
+                
+                <Button Grid.Column="4"
+                        Content="{md:PackIcon Kind=CropSquare}" />
+                
+                <Button Grid.Column="5"
+                        Content="{md:PackIcon Kind=WindowClose}">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}" Height="30" VerticalAlignment="Top" Padding="16.5 0">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="#C42B1C" />
+                                            </Trigger>
+                                            <Trigger Property="IsPressed" Value="True">
+                                                <Setter Property="Background" Value="#B22A1B" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Background" Value="{DynamicResource Primary}" />
+                            <Setter Property="Foreground" Value="{DynamicResource PrimaryFont}" />
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </Grid>
+            
+            <b:Interaction.Triggers>
+                <b:EventTrigger EventName="MouseLeftButtonDown">
+                    <b:InvokeCommandAction Command="{Binding MoveWindowCommand}" />
+                </b:EventTrigger>
+            </b:Interaction.Triggers>
+        </Border>
+        
+        <Grid Row="1" Background="{DynamicResource Primary}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
 
-        <Grid Column="0"
-              Width="Auto">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto"/>
-                <RowDefinition />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
+            <Grid Column="0"
+                  Width="Auto">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                
+                <cc:CustomButton Grid.Row="0"
+                                 Style="{StaticResource NavigationButton}"
+                                 Width="50"
+                                 HorizontalAlignment="Left"
+                                 Height="50"
+                                 Content=""
+                                 Command="{Binding MenuButtonCommand}"
+                                 Icon="{md:PackIcon Kind=Menu}" />
+                
+                <cc:CustomButton Grid.Row="1"
+                                 IsActive="{Binding IsDetailsActive}"
+                                 Style="{StaticResource NavigationButton}"
+                                 Width="{Binding ButtonWidth}"
+                                 Height="50"
+                                 Content="Details"
+                                 Command="{Binding DetailsButtonCommand}"
+                                 Icon="{md:PackIcon Kind=FormatListBulleted}" />
+                
+                <cc:CustomButton Grid.Row="3"
+                                 IsActive="{Binding IsSettingsActive}"
+                                 Style="{StaticResource NavigationButton}"
+                                 Width="{Binding ButtonWidth}"
+                                 Height="50"
+                                 Content="Settings"
+                                 Command="{Binding SettingsButtonCommand}"
+                                 Icon="{md:PackIcon Kind=Settings}" />
+            </Grid>
             
-            <cc:CustomButton Grid.Row="0"
-                             Style="{StaticResource NavigationButton}"
-                             Width="50"
-                             HorizontalAlignment="Left"
-                             Height="50"
-                             Content=""
-                             Command="{Binding MenuButtonCommand}"
-                             Icon="{materialDesign:PackIcon Kind=Menu}" />
+            <ContentPresenter Grid.Column="1" Content="{Binding ViewModel}"/>
             
-            <cc:CustomButton Grid.Row="1"
-                             IsActive="{Binding IsDetailsActive}"
-                             Style="{StaticResource NavigationButton}"
-                             Width="{Binding ButtonWidth}"
-                             Height="50"
-                             Content="Details"
-                             Command="{Binding DetailsButtonCommand}"
-                             Icon="{materialDesign:PackIcon Kind=FormatListBulleted}" />
-            
-            <cc:CustomButton Grid.Row="3"
-                             IsActive="{Binding IsSettingsActive}"
-                             Style="{StaticResource NavigationButton}"
-                             Width="{Binding ButtonWidth}"
-                             Height="50"
-                             Content="Settings"
-                             Command="{Binding SettingsButtonCommand}"
-                             Icon="{materialDesign:PackIcon Kind=Settings}" />
         </Grid>
-        
-        <ContentPresenter Grid.Column="1" Content="{Binding ViewModel}"/>
-        
     </Grid>
+
 </Window>

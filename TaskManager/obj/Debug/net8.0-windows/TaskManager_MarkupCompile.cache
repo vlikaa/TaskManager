@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
 C:\Users\msi\RiderProjects\TaskManager\TaskManager\App.xaml
-71528931101
-1850301096
-17-1720978003
+67814303
+1-1860544373
+16-698307451
 206781867403
-CustomControls\CustomButton.xaml;CustomControls\CustomTitleBar.xaml;CustomControls\Scrollbar.xaml;Themes\DarkTheme.xaml;Themes\LightTheme.xaml;Views\DetailsView.xaml;Views\MainView.xaml;
+CustomControls\CustomButton.xaml;CustomControls\Scrollbar.xaml;Themes\DarkTheme.xaml;Themes\LightTheme.xaml;Views\DetailsView.xaml;Views\MainView.xaml;
 
-True
+False
 

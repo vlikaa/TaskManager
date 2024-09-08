@@ -18,12 +18,12 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Images\" />
+      <Folder Include="Resources\" />
     </ItemGroup>
 
     <ItemGroup>
       <None Remove="Images\default icon.png" />
-      <Content Include="Images\default icon.png">
+      <Content Include="Resources\default icon.png">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
     </ItemGroup>

@@ -13,6 +13,7 @@
              d:DataContext="{d:DesignInstance Type=vm:DetailsViewModel, IsDesignTimeCreatable=False}">
     <UserControl.Resources>
         <c:MemoryFormatter x:Key="MemoryFormatter"/>
+        <c:NullToBoolConverter x:Key="NullToBoolConverter" />
         
         <ControlTemplate TargetType="cc:CustomButton" x:Key="CustomButtonTemplate">
             <Border CornerRadius="2.8" Margin="7" Background="{TemplateBinding Background}">
@@ -187,12 +188,15 @@
     
                 <cc:CustomButton Grid.Column="2"
                                  Content="Run new task"
+                                 Command="{Binding StartNewTaskCommand}"
                                  Icon="{md:PackIcon Kind=TaskAdd}" />
     
                 <Border Grid.Column="3" Width="0.8" Height="33" Background="{DynamicResource Complementary}" CornerRadius="1" VerticalAlignment="Center" />
     
                 <cc:CustomButton Grid.Column="4"
                                  Content="End task"
+                                 IsEnabled="{Binding SelectedProcess, Converter={StaticResource NullToBoolConverter}}"
+                                 Command="{Binding EndTaskCommand}"
                                  Icon="{md:PackIcon Kind=No}" />
             </Grid>
         </Border>

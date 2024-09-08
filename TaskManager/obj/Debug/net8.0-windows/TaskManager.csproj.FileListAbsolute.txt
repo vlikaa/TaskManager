@@ -30,7 +30,6 @@ C:\Users\msi\RiderProjects\TaskManager\TaskManager\obj\Debug\net8.0-windows\Them
 C:\Users\msi\RiderProjects\TaskManager\TaskManager\obj\Debug\net8.0-windows\Themes\LightTheme.baml
 C:\Users\msi\RiderProjects\TaskManager\TaskManager\obj\Debug\net8.0-windows\App.baml
 C:\Users\msi\RiderProjects\TaskManager\TaskManager\bin\Debug\net8.0-windows\System.Drawing.Common.dll
-C:\Users\msi\RiderProjects\TaskManager\TaskManager\bin\Debug\net8.0-windows\Images\default icon.png
 C:\Users\msi\RiderProjects\TaskManager\TaskManager\obj\Debug\net8.0-windows\TaskManager_Content.g.cs
 C:\Users\msi\RiderProjects\TaskManager\TaskManager\bin\Debug\net8.0-windows\MaterialDesignColors.dll
 C:\Users\msi\RiderProjects\TaskManager\TaskManager\bin\Debug\net8.0-windows\MaterialDesignThemes.Wpf.dll
@@ -41,3 +40,4 @@ C:\Users\msi\RiderProjects\TaskManager\TaskManager\obj\Debug\net8.0-windows\Cust
 C:\Users\msi\RiderProjects\TaskManager\TaskManager\obj\Debug\net8.0-windows\TaskManager.sourcelink.json
 C:\Users\msi\RiderProjects\TaskManager\TaskManager\bin\Debug\net8.0-windows\System.Management.dll
 C:\Users\msi\RiderProjects\TaskManager\TaskManager\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Management.dll
+C:\Users\msi\RiderProjects\TaskManager\TaskManager\bin\Debug\net8.0-windows\Resources\default icon.png

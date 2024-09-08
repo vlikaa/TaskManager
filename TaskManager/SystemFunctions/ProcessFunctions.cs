@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Management;
 using System.Runtime.InteropServices;
 using TaskManager.Enums;
@@ -48,7 +47,7 @@ public static class ProcessFunctions
 
 			return status == 0 ? Status.Suspended : Status.Running; 
 		}
-		catch (Win32Exception)
+		catch (Exception)
 		{
 			return Status.Suspended;
 		}
@@ -103,9 +102,10 @@ public static class ProcessFunctions
 
 	public static Architecture GetProcessArchitecture(int processId)
 	{
-		using var process = Process.GetProcessById(processId);
 		try
 		{
+		    var process = Process.GetProcessById(processId);
+		    
 			if (IsWow64Process(process.Handle, out var isWow64))
 			{
 				return isWow64 ? Architecture.X64 : Architecture.X86;

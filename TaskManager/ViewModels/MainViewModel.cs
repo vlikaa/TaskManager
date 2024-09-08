@@ -1,20 +1,22 @@
 ﻿using TaskManager.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using TaskManager.Views;
 
 namespace TaskManager.ViewModels;
 
 [INotifyPropertyChanged]
 public partial class MainViewModel : BaseViewModel
 {
+	private readonly MainView _mainView;
 	private readonly ViewModelFactory _factory;
 
-	public MainViewModel(ViewModelFactory factory)
+	public MainViewModel(MainView mainView, ViewModelFactory factory)
 	{
+		_mainView = mainView;
 		_factory = factory;
 		
 		ViewModel = _factory.Create(typeof(DetailsViewModel));
-		
 	}
 	
 	[RelayCommand]
@@ -39,6 +41,12 @@ public partial class MainViewModel : BaseViewModel
 
 		IsDetailsActive = false;
 		IsSettingsActive = true;
+	}
+	
+	[RelayCommand]
+	private void MoveWindow()
+	{
+		_mainView.DragMove();
 	}
 
 	private void ToggleWidth()

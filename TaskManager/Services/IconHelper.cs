@@ -35,14 +35,17 @@ public static class IconHelper
 				return bitmap;
 			}
 		}
-		catch (Win32Exception) { }
+		catch (Exception)
+		{
+			// ignored
+		}
 
 		return GetFallbackImage();
 	}
     
 	private static BitmapSource GetFallbackImage()
 	{
-		var fallbackImagePath = "Images\\default icon.png";
+		var fallbackImagePath = "Resources\\default icon.png";
 
 		if (!File.Exists(fallbackImagePath)) return new BitmapImage();
 		
