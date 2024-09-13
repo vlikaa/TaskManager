@@ -14,6 +14,7 @@
     <UserControl.Resources>
         <c:MemoryFormatter x:Key="MemoryFormatter"/>
         <c:NullToBoolConverter x:Key="NullToBoolConverter" />
+        <c:PriorityToBooleanConverter x:Key="PriorityToBooleanConverter" />
         
         <ControlTemplate TargetType="cc:CustomButton" x:Key="CustomButtonTemplate">
             <Border CornerRadius="2.8" Margin="7" Background="{TemplateBinding Background}">
@@ -259,20 +260,45 @@
             </DataGrid.Columns>
             <DataGrid.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="End task" />
+                    <MenuItem Header="End task"
+                              Command="{Binding EndTaskCommand}" />
                     <Separator Background="Chocolate" />
-                    <MenuItem Header="Change priority" />
+                    <MenuItem Header="Change priority">
+                        <RadioButton Content="Realtime"
+                                     IsChecked="{Binding SelectedProcess.Priority, Converter={StaticResource PriorityToBooleanConverter}, ConverterParameter=RealTime}"
+                                     Command="{Binding ChangePriorityCommand}"
+                                     CommandParameter="RealTime" />
+                        
+                        <RadioButton Content="High"
+                                     IsChecked="{Binding SelectedProcess.Priority, Converter={StaticResource PriorityToBooleanConverter}, ConverterParameter=High}"
+                                     Command="{Binding ChangePriorityCommand}"
+                                     CommandParameter="High" />
+                        
+                        <RadioButton Content="Above normal"
+                                     IsChecked="{Binding SelectedProcess.Priority, Converter={StaticResource PriorityToBooleanConverter}, ConverterParameter=AboveNormal}"
+                                     Command="{Binding ChangePriorityCommand}"
+                                     CommandParameter="AboveNormal" />
+                        
+                        <RadioButton Content="Normal"
+                                     IsChecked="{Binding SelectedProcess.Priority, Converter={StaticResource PriorityToBooleanConverter}, ConverterParameter=Normal}"
+                                     Command="{Binding ChangePriorityCommand}"
+                                     CommandParameter="Normal" />
+                        
+                        <RadioButton Content="Below normal"
+                                     IsChecked="{Binding SelectedProcess.Priority, Converter={StaticResource PriorityToBooleanConverter}, ConverterParameter=BelowNormal}"
+                                     Command="{Binding ChangePriorityCommand}"
+                                     CommandParameter="BelowNormal" />
+                        
+                        <RadioButton Content="Low"
+                                     IsChecked="{Binding SelectedProcess.Priority, Converter={StaticResource PriorityToBooleanConverter}, ConverterParameter=Idle}"
+                                     Command="{Binding ChangePriorityCommand}"
+                                     CommandParameter="Idle" />
+                    </MenuItem>
+
                     <Separator />
                     <MenuItem Header="Open file location" />
                     <MenuItem Header="Search" />
-                    <MenuItem Header="Задать приоритет">
-                        <MenuItem Header="Реального времени" IsCheckable="True" />
-                        <MenuItem Header="Высокий" IsCheckable="True" />
-                        <MenuItem Header="Выше среднего" IsCheckable="True" />
-                        <MenuItem Header="Обычный" IsCheckable="True" IsChecked="True" />
-                        <MenuItem Header="Ниже среднего" IsCheckable="True" />
-                        <MenuItem Header="Низкий" IsCheckable="True" />
-                    </MenuItem>
+
                     <MenuItem Header="Property" />
                 </ContextMenu>
             </DataGrid.ContextMenu>

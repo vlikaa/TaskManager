@@ -1,4 +1,5 @@
-﻿using TaskManager.Services;
+﻿using System.Windows;
+using TaskManager.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using TaskManager.Views;
@@ -47,6 +48,24 @@ public partial class MainViewModel : BaseViewModel
 	private void MoveWindow()
 	{
 		_mainView.DragMove();
+	}
+	
+	[RelayCommand]
+	private void Minimize()
+	{
+		_mainView.WindowState = WindowState.Minimized;
+	}
+    
+	[RelayCommand]
+	private void ChangeState()
+	{
+		_mainView.WindowState = _mainView.WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
+	}
+	
+	[RelayCommand]
+	private void Close()
+	{
+		_mainView.Close();
 	}
 
 	private void ToggleWidth()

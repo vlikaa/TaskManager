@@ -201,21 +201,15 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <Border Grid.Column="0"
-                        Background="Red"
-                        VerticalAlignment="Top"
-                        Margin="18 18 18 0"
-                        CornerRadius="10"
-                        Width="14"
-                        Height="14" />
                 
-                
-                <!-- <Image Grid.Column="0" -->
-                <!--        Source="/Resources/default icon.png" /> -->
+                <Image Grid.Column="0"
+                       Margin="18 5"
+                       Height="15"
+                       Source="/Resources/icon.ico" />
                 
                 <Label Grid.Column="1"
                        VerticalAlignment="Top"
-                       Margin="5 10 0 0"
+                       Margin="0 10 0 0"
                        FontSize="13.5"
                        Foreground="{DynamicResource PrimaryFont}"
                        Content="Task manager" />
@@ -265,12 +259,15 @@
                 <!-- </Border> -->
                 
                 <Button Grid.Column="3"
+                        Command="{Binding MinimizeCommand}"
                         Content="{md:PackIcon Kind=HorizontalLine}" />
                 
                 <Button Grid.Column="4"
+                        Command="{Binding ChangeStateCommand}"
                         Content="{md:PackIcon Kind=CropSquare}" />
                 
                 <Button Grid.Column="5"
+                        Command="{Binding CloseCommand}"
                         Content="{md:PackIcon Kind=WindowClose}">
                     <Button.Style>
                         <Style TargetType="Button">
