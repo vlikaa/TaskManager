@@ -3,10 +3,74 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:TaskManager.Views"
+             xmlns:v="clr-namespace:TaskManager.Views"
+             xmlns:vm="clr-namespace:TaskManager.ViewModels"
+             xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
+             Background="{DynamicResource Primary}"
+             d:DesignHeight="300" d:DesignWidth="700"
+             d:DataContext="{d:DesignInstance Type=vm:SettingsViewModel, IsDesignTimeCreatable=False}">
+    <Grid Margin="23 7">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0"
+                   Foreground="{DynamicResource PrimaryFont}"
+                   FontSize="20"
+                   FontWeight="Medium"
+                   Text="Settings" />
         
+        <TextBlock Grid.Row="1"
+                   FontSize="14"
+                   Margin="0 25 0 12"
+                   Foreground="{DynamicResource PrimaryFont}"
+                   FontWeight="Medium"
+                   Text="Design" />
+        
+        <Border Grid.Row="2"
+                CornerRadius="5"
+                BorderThickness="0.2"
+                BorderBrush="Black"
+                Background="{DynamicResource NavigationColor}">
+            <Grid Height="65">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                
+                <Label Grid.Column="0"
+                       Margin="15 0"
+                       VerticalAlignment="Center"
+                       Foreground="{DynamicResource PrimaryFont}">
+                    <md:PackIcon Kind="PaletteOutline" Width="25" Height="25" />
+                </Label>                
+                <Label Grid.Column="1"
+                       Foreground="{DynamicResource PrimaryFont}"
+                       Content="{md:PackIcon Kind=SettingsOutline}"/>
+                
+                <Label Grid.Column="2"
+                       Foreground="{DynamicResource PrimaryFont}"
+                       Content="{md:PackIcon Kind=PaletteOutline}"/>
+                
+                <Label Grid.Column="3"
+                       Foreground="{DynamicResource PrimaryFont}"
+                       Content="{md:PackIcon Kind=PaletteSwatch}"/>
+                
+                <Label Grid.Column="4"
+                       Foreground="{DynamicResource PrimaryFont}"
+                       Content="{md:PackIcon Kind=PaletteSwatchOutline}"/>
+                
+                <Label Grid.Column="5"
+                       Foreground="{DynamicResource PrimaryFont}"
+                       Content="{md:PackIcon Kind=PaletteSwatchVariant}"/>
+            </Grid>
+        </Border>
     </Grid>
 </UserControl>

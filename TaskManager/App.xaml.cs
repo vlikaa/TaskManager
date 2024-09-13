@@ -20,6 +20,7 @@ public partial class App
 		_serviceCollection.AddSingleton<MainView>();
 		_serviceCollection.AddSingleton<MainViewModel>();
 		_serviceCollection.AddSingleton<BaseViewModel, DetailsViewModel>();
+		_serviceCollection.AddSingleton<BaseViewModel, SettingsViewModel>();
 		
 		_serviceCollection.AddSingleton<ViewModelFactory>();
 

@@ -38,7 +38,7 @@ public partial class MainViewModel : BaseViewModel
 	[RelayCommand]
 	private void SettingsButton()
 	{
-		ViewModel = _factory.Create(typeof(DetailsViewModel));
+		ViewModel = _factory.Create(typeof(SettingsViewModel));
 
 		IsDetailsActive = false;
 		IsSettingsActive = true;

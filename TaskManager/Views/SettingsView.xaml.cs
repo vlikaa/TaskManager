@@ -1,8 +1,6 @@
-﻿using System.Windows.Controls;
+﻿namespace TaskManager.Views;
 
-namespace TaskManager.Views;
-
-public partial class SettingsView : UserControl
+public partial class SettingsView
 {
 	public SettingsView()
 	{

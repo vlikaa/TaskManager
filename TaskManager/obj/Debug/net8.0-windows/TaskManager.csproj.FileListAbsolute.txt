@@ -42,3 +42,5 @@ C:\Users\msi\RiderProjects\TaskManager\TaskManager\bin\Debug\net8.0-windows\Syst
 C:\Users\msi\RiderProjects\TaskManager\TaskManager\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Management.dll
 C:\Users\msi\RiderProjects\TaskManager\TaskManager\bin\Debug\net8.0-windows\Resources\default icon.png
 C:\Users\msi\RiderProjects\TaskManager\TaskManager\bin\Debug\net8.0-windows\Resources\icon.ico
+C:\Users\msi\RiderProjects\TaskManager\TaskManager\obj\Debug\net8.0-windows\Views\SettingsView.g.cs
+C:\Users\msi\RiderProjects\TaskManager\TaskManager\obj\Debug\net8.0-windows\Views\SettingsView.baml
