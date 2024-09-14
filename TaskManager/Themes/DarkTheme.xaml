@@ -25,5 +25,7 @@
     <SolidColorBrush x:Key="ScrollBarColor" Color="#171717"/>
     
     <SolidColorBrush x:Key="NavigationColor" Color="#2D2D2D"/>
+    <SolidColorBrush x:Key="NavigationBorderColor" Color="#000"/>
+    <SolidColorBrush x:Key="NavigationActiveBorderColor" Color="#3DECFF"/>
     <SolidColorBrush x:Key="PressedNavigationColor" Color="#292929"/>
 </ResourceDictionary>

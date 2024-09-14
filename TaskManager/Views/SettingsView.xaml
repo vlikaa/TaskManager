@@ -6,6 +6,7 @@
              xmlns:v="clr-namespace:TaskManager.Views"
              xmlns:vm="clr-namespace:TaskManager.ViewModels"
              xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d"
              Background="{DynamicResource Primary}"
              d:DesignHeight="300" d:DesignWidth="700"
@@ -50,26 +51,25 @@
                        VerticalAlignment="Center"
                        Foreground="{DynamicResource PrimaryFont}">
                     <md:PackIcon Kind="PaletteOutline" Width="25" Height="25" />
-                </Label>                
-                <Label Grid.Column="1"
-                       Foreground="{DynamicResource PrimaryFont}"
-                       Content="{md:PackIcon Kind=SettingsOutline}"/>
+                </Label>
                 
-                <Label Grid.Column="2"
-                       Foreground="{DynamicResource PrimaryFont}"
-                       Content="{md:PackIcon Kind=PaletteOutline}"/>
+                <StackPanel Grid.Column="1">
+                    <TextBlock Text="Choose an application theme" />
+                    <TextBlock Text="Choose an application theme to display" />
+                </StackPanel>
                 
-                <Label Grid.Column="3"
-                       Foreground="{DynamicResource PrimaryFont}"
-                       Content="{md:PackIcon Kind=PaletteSwatch}"/>
-                
-                <Label Grid.Column="4"
-                       Foreground="{DynamicResource PrimaryFont}"
-                       Content="{md:PackIcon Kind=PaletteSwatchOutline}"/>
-                
-                <Label Grid.Column="5"
-                       Foreground="{DynamicResource PrimaryFont}"
-                       Content="{md:PackIcon Kind=PaletteSwatchVariant}"/>
+                <ComboBox Grid.Column="2">
+                    <ComboBoxItem Content="Use system settings" />
+                    <ComboBoxItem Content="Light" />
+                    <ComboBoxItem Content="Dark" IsSelected="True" />
+                    
+                    <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="SelectionChanged">
+                            <b:InvokeCommandAction Command="{Binding ChangeThemeCommand}" 
+                                                   CommandParameter="{Binding SelectedItem.Content, RelativeSource={RelativeSource AncestorType=ComboBox}}" />
+                        </b:EventTrigger>
+                    </b:Interaction.Triggers>
+                </ComboBox>
             </Grid>
         </Border>
     </Grid>

@@ -126,7 +126,7 @@
                             Margin="0 2.3 0 0"
                             Height="18"
                             CornerRadius="3"
-                            Background="#3DECFF" />
+                            Background="{DynamicResource NavigationActiveBorderColor}" />
                     
                     <Label Grid.Column="1"
                            FontSize="12"
