@@ -17,6 +17,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0"
                    Foreground="{DynamicResource PrimaryFont}"
@@ -40,9 +41,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 
@@ -53,15 +52,68 @@
                     <md:PackIcon Kind="PaletteOutline" Width="25" Height="25" />
                 </Label>
                 
-                <StackPanel Grid.Column="1">
-                    <TextBlock Text="Choose an application theme" />
-                    <TextBlock Text="Choose an application theme to display" />
+                <StackPanel Grid.Column="1"
+                            VerticalAlignment="Center">
+                    <TextBlock Foreground="{DynamicResource PrimaryFont}" Text="Choose an application theme" />
+                    <TextBlock Foreground="{DynamicResource SecondaryFont}" Text="Choose an application theme to display" />
                 </StackPanel>
                 
-                <ComboBox Grid.Column="2">
-                    <ComboBoxItem Content="Use system settings" />
-                    <ComboBoxItem Content="Light" />
-                    <ComboBoxItem Content="Dark" IsSelected="True" />
+                <ComboBox Grid.Column="3"
+                          Height="30"
+                          Width="130">
+                    <ComboBoxItem Content="Light" IsSelected="{Binding IsLightTheme}" />
+                    <ComboBoxItem Content="Dark" IsSelected="{Binding IsDarkTheme}" />
+                    
+                    <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="SelectionChanged">
+                            <b:InvokeCommandAction Command="{Binding ChangeThemeCommand}" 
+                                                   CommandParameter="{Binding SelectedItem.Content, RelativeSource={RelativeSource AncestorType=ComboBox}}" />
+                        </b:EventTrigger>
+                    </b:Interaction.Triggers>
+                </ComboBox>
+            </Grid>
+        </Border>
+        
+        <TextBlock Grid.Row="3"
+                   FontSize="14"
+                   Margin="0 25 0 12"
+                   Foreground="{DynamicResource PrimaryFont}"
+                   FontWeight="Medium"
+                   Text="General" />
+        
+        <Border Grid.Row="4"
+                CornerRadius="5"
+                BorderThickness="0.2"
+                BorderBrush="Black"
+                Background="{DynamicResource NavigationColor}">
+            <Grid Height="65">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                
+                <Label Grid.Column="0"
+                       Margin="15 0"
+                       VerticalAlignment="Center"
+                       Foreground="{DynamicResource PrimaryFont}">
+                    <md:PackIcon Kind="SpeedometerMedium" Width="25" Height="25" />
+                </Label>
+                
+                <StackPanel Grid.Column="1"
+                            VerticalAlignment="Center">
+                    <TextBlock Foreground="{DynamicResource PrimaryFont}" Text="Real-time update rate" />
+                    <TextBlock Foreground="{DynamicResource SecondaryFont}" Text="Select how often you want to update the system resource usage report" />
+                </StackPanel>
+                
+                <ComboBox Grid.Column="3"
+                          Height="30"
+                          Width="130">
+                    <ComboBoxItem Content="High" />
+                    <ComboBoxItem Content="Normal" IsSelected="True" />
+                    <ComboBoxItem Content="Low" />
+                    <ComboBoxItem Content="Paused" />
                     
                     <b:Interaction.Triggers>
                         <b:EventTrigger EventName="SelectionChanged">

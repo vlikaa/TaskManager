@@ -4,7 +4,9 @@
     <SolidColorBrush x:Key="Secondary" Color="#191919"/>
     <SolidColorBrush x:Key="Complementary" Color="#2C2C2C"/>
     <SolidColorBrush x:Key="PressedColor" Color="#222222"/>
+    
     <SolidColorBrush x:Key="PrimaryFont" Color="#FFF"/>
+    <SolidColorBrush x:Key="SecondaryFont" Color="#CFCFCF"/>
     <SolidColorBrush x:Key="PressedFontColor" Color="#CDCDCD"/>
     <SolidColorBrush x:Key="DisableFontColor" Color="#696969"/>
     
