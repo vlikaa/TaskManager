@@ -262,7 +262,7 @@
                 <ContextMenu>
                     <MenuItem Header="End task"
                               Command="{Binding EndTaskCommand}" />
-                    <Separator Background="Chocolate" />
+                    <Separator />
                     <MenuItem Header="Change priority">
                         <RadioButton Content="Realtime"
                                      IsChecked="{Binding SelectedProcess.Priority, Converter={StaticResource PriorityToBooleanConverter}, ConverterParameter=RealTime}"
@@ -298,9 +298,9 @@
                     <Separator />
                     <MenuItem Header="Open file location"
                               Command="{Binding OpenFileLocationCommand}" />
-                    <MenuItem Header="Search" />
-
-                    <MenuItem Header="Property" />
+                    
+                    <MenuItem Header="Search the Internet"
+                              Command="{Binding SearchInternetCommand}"/>
                 </ContextMenu>
             </DataGrid.ContextMenu>
         </DataGrid>

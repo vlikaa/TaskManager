@@ -136,6 +136,23 @@ public partial class DetailsViewModel : BaseViewModel
 		}
 	}
 
+	[RelayCommand]
+	private void SearchInternet()
+	{
+		if (SelectedProcess is null)
+		{
+			return;
+		}
+		
+		var searchQuery = $"https://www.google.com/search?q={SelectedProcess.Name} process";
+		
+		Process.Start(new ProcessStartInfo
+		{
+			FileName = searchQuery,
+			UseShellExecute = true
+		});
+	}
+
 	private void UpdateProcesses()
 	{
 		if (!_updateEvent.IsSet)
