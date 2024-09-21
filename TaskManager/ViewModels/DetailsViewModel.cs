@@ -9,6 +9,8 @@ using Timer = System.Timers.Timer;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
+using TaskManager.Messages;
 
 namespace TaskManager.ViewModels;
 
@@ -21,7 +23,7 @@ public partial class DetailsViewModel : BaseViewModel
 		
 		var timer = new Timer
 		{
-			Interval = _interval,
+			Interval = 1000,
 			Enabled = true
 		};
 
@@ -37,6 +39,21 @@ public partial class DetailsViewModel : BaseViewModel
 		
 		Keyboard.AddKeyDownHandler(Application.Current.MainWindow, OnKeyDown);
 		Keyboard.AddKeyUpHandler(Application.Current.MainWindow, OnKeyUp);
+		
+		WeakReferenceMessenger.Default.Register<ChangeIntervalMessage>(this,
+			(_, message) =>
+			{
+				if (message.Interval == 0)
+				{
+					_updateEvent.Reset();
+					
+					return;
+				}
+				
+				_updateEvent.Set();
+				
+				timer.Interval = message.Interval;
+			});
 	}
 
 	[RelayCommand]
@@ -168,7 +185,6 @@ public partial class DetailsViewModel : BaseViewModel
 		_updateEvent.Set();
 	}
 	
-	private int _interval = 1000;
 	private readonly ManualResetEventSlim _updateEvent = new(true);
 	[ObservableProperty] private ProcessInfo? _selectedProcess;
 	[ObservableProperty] private ObservableCollection<ProcessInfo> _processes = [];

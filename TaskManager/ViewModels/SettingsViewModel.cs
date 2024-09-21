@@ -1,6 +1,9 @@
 ﻿using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using TaskManager.Enums;
+using TaskManager.Messages;
 
 namespace TaskManager.ViewModels;
 
@@ -34,12 +37,35 @@ public partial class SettingsViewModel : BaseViewModel
 				break;
 		}
 
-
 		Application.Current.Resources.MergedDictionaries.RemoveAt(1);
 		Application.Current.Resources.MergedDictionaries.Add(newTheme);
+	}
+	
+	
+	[RelayCommand]
+	private void ChangeInterval(string intervalName)
+	{
+		if (!Enum.TryParse(intervalName, out IntervalType intervalType))
+		{
+			return;
+		}
+		
+		CurrentInterval = intervalType;
+			
+		var interval = intervalType switch
+		{
+			IntervalType.High => 500,
+			IntervalType.Normal => 1000,
+			IntervalType.Low => 5000,
+			_ => 0
+		};
 
+		WeakReferenceMessenger.Default.Send(
+			new ChangeIntervalMessage(interval));
 	}
 	
 	[ObservableProperty] private bool _isDarkTheme = true;
 	[ObservableProperty] private bool _isLightTheme;
+	
+	[ObservableProperty] private IntervalType _currentInterval = IntervalType.Normal;
 }
