@@ -111,6 +111,31 @@ public partial class DetailsViewModel : BaseViewModel
 		}
 	}
 
+	[RelayCommand]
+	private void OpenFileLocation()
+	{
+		if (SelectedProcess is null)
+		{
+			return;
+		}
+		
+		try
+		{
+			var filePath = SelectedProcess.FileName;
+
+			if (string.IsNullOrEmpty(filePath))
+			{
+				return;
+			}
+			
+			Process.Start("explorer.exe", $"/select,\"{filePath}\"");
+		}
+		catch
+		{
+			// ignored
+		}
+	}
+
 	private void UpdateProcesses()
 	{
 		if (!_updateEvent.IsSet)
@@ -151,7 +176,8 @@ public partial class DetailsViewModel : BaseViewModel
 					// Cpu = ProcessFunctions.GetProcessInstanceName(process.Id),
 					Memory = process.WorkingSet64 / 1024,
 					Architecture = ProcessHelper.GetProcessArchitecture(process.Id),
-					Priority = ProcessHelper.GetPriority(process.Id)
+					Priority = ProcessHelper.GetPriority(process.Id),
+					FileName = ProcessHelper.GetProcessFileName(process.Id)
 				});
 			}
 

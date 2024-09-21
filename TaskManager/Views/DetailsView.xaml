@@ -296,7 +296,8 @@
                     </MenuItem>
 
                     <Separator />
-                    <MenuItem Header="Open file location" />
+                    <MenuItem Header="Open file location"
+                              Command="{Binding OpenFileLocationCommand}" />
                     <MenuItem Header="Search" />
 
                     <MenuItem Header="Property" />

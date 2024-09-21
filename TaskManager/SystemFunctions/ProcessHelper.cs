@@ -47,7 +47,7 @@ public static class ProcessHelper
 
 			return status == 0 ? Status.Suspended : Status.Running; 
 		}
-		catch (Exception)
+		catch
 		{
 			return Status.Suspended;
 		}
@@ -73,7 +73,7 @@ public static class ProcessHelper
 					return $"{outParameters[1]}\\{outParameters[0]}";
 				}
 			}
-			catch (Exception)
+			catch
 			{
 				return "N/A";
 			}
@@ -113,7 +113,7 @@ public static class ProcessHelper
 
 			throw new Exception("Unable to determine process architecture.");
 		}
-		catch (Exception ex)
+		catch
 		{
 			return Architecture.X64;
 		}
@@ -127,11 +127,25 @@ public static class ProcessHelper
 
 			return process.PriorityClass;
 		}
-		catch (Exception)
+		catch
 		{
 			// ignored
 		}
 
 		return ProcessPriorityClass.Normal;
+	}
+
+	public static string GetProcessFileName(int processId)
+	{
+		try
+		{
+			var process = Process.GetProcessById(processId);
+
+			return process.MainModule == null ? string.Empty : process.MainModule.FileName;
+		}
+		catch
+		{
+			return string.Empty;
+		}
 	}
 }

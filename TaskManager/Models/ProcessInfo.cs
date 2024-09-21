@@ -21,4 +21,5 @@ public partial class ProcessInfo : ObservableObject
 	public Architecture Architecture { get; set; }
 	public string? Description { get; set; }
 	public ProcessPriorityClass Priority { get; set; }
+	public string FileName { get; set; } = string.Empty;
 }
