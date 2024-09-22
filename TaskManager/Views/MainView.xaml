@@ -218,8 +218,7 @@
                        Foreground="{DynamicResource PrimaryFont}"
                        Content="Task manager" />
                 
-                <TextBox Grid.Column="2"
-                         Style="{StaticResource HeaderTextBox}" />
+
                 
                 <!-- <Border Grid.Column="2" -->
                 <!--         CornerRadius="5" -->

@@ -8,6 +8,7 @@ using TaskManager.SystemFunctions;
 using Timer = System.Timers.Timer;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows.Data;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using TaskManager.Messages;
@@ -20,6 +21,9 @@ public partial class DetailsViewModel : BaseViewModel
 	public DetailsViewModel()
 	{
 		UpdateProcesses();
+		
+		ProcessesView = CollectionViewSource.GetDefaultView(Processes);
+		ProcessesView.Filter = FilterProcesses;
 		
 		var timer = new Timer
 		{
@@ -199,11 +203,13 @@ public partial class DetailsViewModel : BaseViewModel
 			}
 
 			var processIds = processes.Select(p => p.Id);
-			var processesToRemove = Processes.Where(p => !processIds.Contains(p.Id));
-
-			foreach (var process in processesToRemove)
 			{
-				Processes.Remove(process);
+				var processesToRemove = Processes.Where(p => !processIds.Contains(p.Id));
+
+				foreach (var process in processesToRemove)
+				{
+					Processes.Remove(process);
+				}
 			}
 		});
 	}
@@ -228,7 +234,24 @@ public partial class DetailsViewModel : BaseViewModel
 		_updateEvent.Set();
 	}
 	
+	private bool FilterProcesses(object item)
+	{
+		if (item is ProcessInfo process)
+		{
+			return string.IsNullOrEmpty(SearchText) || process.Name.Contains(SearchText, StringComparison.OrdinalIgnoreCase);
+		}
+    
+		return false;
+	}
+	
+	partial void OnSearchTextChanged(string _)
+	{
+		ProcessesView.Refresh();
+	}
+	
 	private readonly ManualResetEventSlim _updateEvent = new(true);
+	[ObservableProperty] private string _searchText = string.Empty;
+	[ObservableProperty] private ICollectionView _processesView;
 	[ObservableProperty] private ProcessInfo? _selectedProcess;
 	[ObservableProperty] private ObservableCollection<ProcessInfo> _processes = [];
 }

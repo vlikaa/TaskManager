@@ -137,26 +137,57 @@
                 </Setter.Value>
             </Setter>
         </Style>
-    
-        <Style TargetType="DataGridRow">
-            <Setter Property="Background" Value="{DynamicResource Secondary}" />
-            <Setter Property="Foreground" Value="{DynamicResource PrimaryFont}" />
+        
+        <ControlTemplate x:Key="CustomTextBox" TargetType="TextBox">
+            <Border CornerRadius="5"
+                    Margin="242 10 300 8"
+                    Background="{DynamicResource NavigationColor}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            
+                            <Label Grid.Column="0"
+                                   Margin="8 0"
+                                   VerticalAlignment="Center"
+                                   Foreground="{DynamicResource PressedFontColor}"
+                                   Content="{md:PackIcon Kind=Magnify}"/>
+                            
+                            <TextBox Grid.Column="1"
+                                     BorderThickness="0"
+                                     Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                                     FontSize="15"
+                                     FontWeight="450"
+                                     Foreground="{DynamicResource PressedFontColor}"
+                                     Background="{TemplateBinding Background}"
+                                     Margin="0 0 0 3"
+                                     VerticalAlignment="Center" />
+                        </Grid>                     
+                        
+                        <Border Grid.Row="1"
+                                Height="2.5"
+                                CornerRadius="0 0 5 5"
+                                Background="#3DECFF" />
+                    </Grid>
+                </Border>
+        </ControlTemplate>
+        
+        <Style x:Key="HeaderTextBox" TargetType="TextBox">
+            <Style.Setters>
+                <Setter Property="Template" Value="{StaticResource CustomTextBox}"/>
+                <Setter Property="Background" Value="{DynamicResource NavigationColor}"/>
+            </Style.Setters>
             <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="{DynamicResource HoverRowColor}" />
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="Background" Value="Red" />
                 </Trigger>
-                <Trigger Property="IsSelected" Value="True">
-                    <Setter Property="Background" Value="{DynamicResource SelectedRowColor}" />
-                    <Setter Property="BorderBrush" Value="{DynamicResource SelectedBorderRowColor}" />
-                    <Setter Property="BorderThickness" Value="0.5" />
-                </Trigger>
-                <MultiTrigger>
-                    <MultiTrigger.Conditions>
-                        <Condition Property="IsMouseOver" Value="True" />
-                        <Condition Property="IsSelected" Value="True" />
-                    </MultiTrigger.Conditions>
-                    <Setter Property="BorderBrush" Value="Black" />
-                </MultiTrigger>
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
@@ -168,7 +199,11 @@
             <RowDefinition />
         </Grid.RowDefinitions>
     
-        <Border Grid.Row="0"
+        <TextBox Grid.Row="0"
+                 Margin="0 -50 0 0"
+                 Style="{StaticResource HeaderTextBox}" />
+        
+        <Border Grid.Row="1"
                 Background="{DynamicResource Secondary}"
                 CornerRadius="8 0 0 0">
             <Grid>
@@ -213,7 +248,31 @@
                   IsReadOnly="True"
                   Background="{DynamicResource Secondary}"
                   SelectedItem="{Binding SelectedProcess}"
-                  ItemsSource="{Binding Processes}">
+                  ItemsSource="{Binding ProcessesView}">
+            
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Setter Property="Background" Value="{DynamicResource Secondary}" />
+                    <Setter Property="Foreground" Value="{DynamicResource PrimaryFont}" />
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource HoverRowColor}" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource SelectedRowColor}" />
+                            <Setter Property="BorderBrush" Value="{DynamicResource SelectedBorderRowColor}" />
+                            <Setter Property="BorderThickness" Value="0.5" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True" />
+                                <Condition Property="IsSelected" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="BorderBrush" Value="Black" />
+                        </MultiTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
     
             <DataGrid.Columns>
                 <DataGridTextColumn CellStyle="{StaticResource ImageCellStyle}"

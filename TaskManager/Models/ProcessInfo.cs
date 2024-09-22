@@ -1,15 +1,15 @@
-﻿using System.Diagnostics;
-using System.Runtime.InteropServices;
+﻿using TaskManager.Enums;
+using System.Diagnostics;
 using System.Windows.Media.Imaging;
+using System.Runtime.InteropServices;
 using CommunityToolkit.Mvvm.ComponentModel;
-using TaskManager.Enums;
 
 namespace TaskManager.Models;
 
 public partial class ProcessInfo : ObservableObject
 {
 	public BitmapSource? Icon { get; set; }
-	[ObservableProperty] private string _name;
+	[ObservableProperty] private string _name = string.Empty;
 	// public string? Name { get; set; }
 	public int Id { get; set; }
 	public Status Status { get; set; }
